@@ -112,3 +112,9 @@ pm2 startup
 - `/static`：构建后的前端管理界面静态资产。
 - `/data`：持久化的会话及配置数据（由 Docker 挂载）。
 - `/logs`：系统运行日志目录。
+
+## 🔗 友情链接
+
+<div align="center">
+  <a href="https://linux.do/"><img src="https://img.shields.io/badge/LINUX_DO-学AI，上L站！-6366F1?style=flat-square" alt="LINUX DO"/></a>
+</div>
