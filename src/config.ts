@@ -25,13 +25,20 @@ let cachedEnvConfig: EnvConfig | null = null;
 export function getEnvConfig(): EnvConfig {
   if (cachedEnvConfig) return cachedEnvConfig;
 
+  const adminPassword = process.env.ADMIN_PASSWORD || 'admin';
+  
+  if (adminPassword === 'admin' && process.env.NODE_ENV === 'production') {
+    logger.warn('⚠️ [SECURITY WARNING] You are using the default admin password "admin" in production!');
+    logger.warn('⚠️ Please set the ADMIN_PASSWORD environment variable immediately.');
+  }
+
   const config = envConfigSchema.parse({
     server: {
       port: parseInt(process.env.PORT || '3000', 10),
       host: process.env.HOST || '0.0.0.0',
     },
     auth: {
-      adminPassword: process.env.ADMIN_PASSWORD || 'admin',
+      adminPassword,
     },
     logging: {
       level: process.env.LOG_LEVEL || 'info',
@@ -80,7 +87,7 @@ export interface SystemSettings {
 }
 
 const defaultSettings: SystemSettings = {
-  apiKeys: ['sk-test-key-123'],
+  apiKeys: [],
   tokenRefresh: {
     enabled: true,
     intervalMinutes: 30,

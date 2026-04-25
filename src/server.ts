@@ -9,6 +9,7 @@ import { logger } from './logger.js';
 export async function createServer() {
   const app = Fastify({
     logger: logger as any,
+    disableRequestLogging: process.env.NODE_ENV === 'production',
   });
 
   await app.register(cors, {

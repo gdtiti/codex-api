@@ -15,7 +15,7 @@ services:
       ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
       LOG_LEVEL: ${LOG_LEVEL:-info}
     ports:
-      - "${HOST_PORT:-3000}:${PORT:-3000}"
+      - "${BIND_IP:-127.0.0.1}:${HOST_PORT:-3000}:${PORT:-3000}"
     volumes:
       - ./data:/app/data
       - ./logs:/app/logs
