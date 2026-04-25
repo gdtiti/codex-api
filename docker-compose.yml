@@ -1,0 +1,33 @@
+services:
+  codex-api:
+    platform: linux/arm64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: codex-api:local
+    container_name: codex-api
+    restart: unless-stopped
+    init: true
+    environment:
+      NODE_ENV: ${NODE_ENV:-production}
+      HOST: ${HOST:-0.0.0.0}
+      PORT: ${PORT:-3000}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    ports:
+      - "${HOST_PORT:-3000}:${PORT:-3000}"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - >
+          node -e "fetch('http://127.0.0.1:' + (process.env.PORT || '3000') + '/health')
+          .then((response) => { if (!response.ok) process.exit(1); })
+          .catch(() => process.exit(1))"
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    stop_grace_period: 30s
