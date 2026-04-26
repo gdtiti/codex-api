@@ -113,6 +113,10 @@ pm2 startup
 - `/data`：持久化的会话及配置数据（由 Docker 挂载）。
 - `/logs`：系统运行日志目录。
 
+## 📄 开源协议
+
+本项目采用 [MIT](LICENSE) 协议开源。
+
 ## 🔗 友情链接
 
 <div align="center">
